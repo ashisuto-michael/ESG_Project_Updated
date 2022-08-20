@@ -1,0 +1,18 @@
+[
+    {
+      "name":"Kilometers",
+      "format": "[V]Km"
+    },
+    {
+      "name":"US Dollars",
+      "format": "$[V]"
+    },
+    {
+      "name":"Seconds",
+      "format": "[V]s"
+    },
+    {
+      "name":"Hours",
+      "format": "[V]h"
+    }
+  ]

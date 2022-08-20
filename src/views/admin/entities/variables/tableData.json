@@ -1,0 +1,22 @@
+[
+    {
+      "name":"Industrial Co Sdn. Bhd",
+      "classification": "Company",
+      "owner": "Raufi Anatosik"
+    },
+    {
+      "name":"Penasik Mine",
+      "classification": "Location",
+      "owner": "Arifin bin Irfan"
+    },
+    {
+      "name":"Blackhammer Drilling",
+      "classification": "Vendor",
+      "owner": "Wong Kai Li"
+    },
+    {
+      "name":"Kileman Quarry",
+      "classification": "Location",
+      "owner": "Arifin bin Irfan"
+    }
+  ]

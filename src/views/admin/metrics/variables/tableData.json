@@ -1,0 +1,20 @@
+[
+  {
+    "name": "GHG emission",
+    "type": "Manual",
+    "category": "Quantitative",
+    "unit": "CO2",
+    "entity": "Industrial Co Sdn. Bhd",
+    "source": "Global CO2",
+    "schedule": "1.Dec.2022 - 1.Jan 2023"
+  },
+  {
+    "name": "Paper Usage",
+    "type": "Automatic",
+    "category": "Quantitative",
+    "unit": "m",
+    "entity": "Penasik Mine",
+    "source": "Global CO2",
+    "schedule": "2.May.2021 - 1.Jan 2023"
+  }
+]
