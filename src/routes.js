@@ -18,6 +18,9 @@ import Metrics from 'views/admin/metrics';
 import Targets from 'views/admin/targets';
 import Goals from 'views/admin/goals'
 
+// Admin Edit Imports (for creating & editing a doc)
+import MaterialTopic from 'views/admin/materialTopic';
+
 // Auth Imports
 import SignInCentered from 'views/auth/signIn';
 import SignUpCentered from 'views/auth/signUp';
@@ -36,6 +39,20 @@ const routes = [
     icon: <Icon as={MdBarChart} width="20px" height="20px" color="inherit" />,
     path: '/material-topics',
     component: MaterialTopics,
+  },
+  {
+    name: 'Edit Material Topic',
+    layout: '/admin',
+    icon: <Icon as={MdBarChart} width="20px" height="20px" color="inherit" />,
+    path: '/material-topic/:id',
+    component: MaterialTopic,
+  },
+  {
+    name: 'New Material Topic',
+    layout: '/admin',
+    icon: <Icon as={MdBarChart} width="20px" height="20px" color="inherit" />,
+    path: '/material-topic',
+    component: MaterialTopic,
   },
   {
     name: 'Units',
