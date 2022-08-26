@@ -9,7 +9,7 @@ import {
   onAuthStateChanged,
 } from 'firebase/auth';
 // Firebase auth instance
-import firebaseAuth from 'lib/firebase';
+import { firebaseAuth } from 'lib/firebase';
 // Google oauth provider
 const provider = new GoogleAuthProvider();
 // Contexts

@@ -10,7 +10,8 @@ import {
     Thead,
     Tr,
     useColorModeValue,
-    Button
+    Button,
+    IconButton,
   } from "@chakra-ui/react";
   import {BrowserRouter as Router, Link} from 'react-router-dom';
   import React, { useMemo } from "react";
@@ -20,7 +21,8 @@ import {
     useSortBy,
     useTable,
   } from "react-table";
-  
+  import { EditIcon, DeleteIcon } from '@chakra-ui/icons'
+
   // Custom components
   import Card from "components/card/Card";
   import Menu from "components/menu/MainMenu";
@@ -29,7 +31,12 @@ import {
   import {SiGumtree} from "react-icons/si";
   import {BsPeople, BsBuilding} from "react-icons/bs";
   export default function ColumnsTable(props) {
-    const { columnsData, tableData } = props;
+    // params passed to table:
+    // 1. columns
+    // 2. rows
+    // 3. update row function
+    // 4. delete row function
+    const { columnsData, tableData, updateData, deleteData } = props;
   
     const columns = useMemo(() => columnsData, [columnsData]);
     const data = useMemo(() => tableData, [tableData]);
@@ -70,9 +77,9 @@ import {
             lineHeight='100%'>
             Material Topics
           </Text>
-          {/* <Menu /> */}
-
-        <Link to="/admin/new-material-topic">
+        
+        {/* <Menu /> */}
+        <Link to="/admin/material-topic">
           <Button colorScheme='blue'>Create New</Button>
         </Link>
           
@@ -96,6 +103,9 @@ import {
                     </Flex>
                   </Th>
                 ))}
+                <Th>
+                  Actions
+                </Th>
               </Tr>
             ))}
           </Thead>
@@ -106,7 +116,13 @@ import {
                 <Tr {...row.getRowProps()} key={index}>
                   {row.cells.map((cell, index) => {
                     let data = "";
-                    if (cell.column.Header === "NAME") {
+                    if (cell.column.Header === "ID") {
+                      data = (
+                        <Text color={textColor} fontSize='sm' fontWeight='700'>
+                          {cell.value}
+                        </Text>
+                      );
+                    } else if (cell.column.Header === "NAME") {
                       data = (
                         <Text color={textColor} fontSize='sm' fontWeight='700'>
                           {cell.value}
@@ -167,6 +183,10 @@ import {
                       </Td>
                     );
                   })}
+                  <Td>
+                    <IconButton aria-label='Edit' icon={<EditIcon />} onClick={() => updateData(row.values.id)} />
+                    <IconButton aria-label='Delete' icon={<DeleteIcon />} onClick={() => deleteData(row.values.id)} />
+                  </Td>
                 </Tr>
               );
             })}
