@@ -1,0 +1,182 @@
+// Chakra imports
+import {
+  Box,
+  SimpleGrid,
+  FormControl,
+  FormLabel,
+  FormErrorMessage,
+  FormHelperText,
+  Input,
+  NumberInput,
+  NumberInputField,
+  NumberInputStepper,
+  NumberIncrementStepper,
+  NumberDecrementStepper,
+  Select,
+  Button,
+} from "@chakra-ui/react";
+
+import React, { useState, useEffect } from "react";
+import { useParams, useHistory } from "react-router-dom";
+import { db } from "../../../lib/firebase";
+
+// this page is used for creating a new doc or editing an existing doc
+// the add/edit mode depends on if a doc Id is passed in page params
+export default function Metric() {
+  // state hooks to keep track of changes to each doc field
+  const [name, setName] = useState("");
+  const [type, setType] = useState("");
+  const [category, setCategory] = useState("");
+  const [unit, setUnit] = useState("");
+  const [entity, setEntity] = useState("");
+  const [source, setSource] = useState("");
+  const [schedule, setSchedule] = useState("");
+
+  // for page navigation
+  const history = useHistory();
+
+  // check page params
+  const { id } = useParams();
+  console.log(id);
+
+  // load data when this page is loaded (for edit mode only)
+  useEffect(() => {
+    if (!!id) {
+      getData(id);
+    }
+  }, []);
+
+  // read doc from Firestore
+  const getData = (id) => {
+    db.collection("metric")
+      .doc(id)
+      .get()
+      .then((snapshot) => {
+        const doc = snapshot.data();
+        console.log(doc);
+        setName(doc.name);
+        setType(doc.type);
+        setCategory(doc.category);
+        setUnit(doc.unit);
+        setEntity(doc.entity);
+        setSource(doc.source);
+        setSchedule(doc.schedule);
+      });
+  };
+
+  // save doc to Firestore
+  const saveData = () => {
+    if (!!id) {
+      // edit existing doc
+      db.collection("metric")
+        .doc(id)
+        .set({
+          name,
+          type,
+          category,
+          unit,
+          entity,
+          source,
+          schedule,
+        })
+        .then(history.push("/admin/metrics"));
+    } else {
+      // create new doc
+      db.collection("metric")
+        .doc()
+        .set({
+          name,
+          type,
+          category,
+          unit,
+          entity,
+          source,
+          schedule,
+        })
+        .then(history.push("/admin/metrics"));
+    }
+  };
+
+  // Chakra Color Mode
+  return (
+    <Box pt={{ base: "130px", md: "80px", xl: "80px" }}>
+      <FormControl isRequired>
+        <FormLabel>Name</FormLabel>
+        <Input
+          placeholder="Name"
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+        />
+      </FormControl>
+
+      <FormControl isRequired>
+        <FormLabel>Type</FormLabel>
+        <Select
+          placeholder="Select"
+          value={type}
+          onChange={(e) => setType(e.target.value)}
+        >
+          <option value="Manual">Manual</option>
+          <option value="Automated">Automated</option>
+        </Select>
+      </FormControl>
+
+      <FormControl isRequired>
+        <FormLabel>Category</FormLabel>
+        <Select
+          placeholder="Select"
+          value={category}
+          onChange={(e) => setCategory(e.target.value)}
+        >
+          <option value="Qualitative">Qualitative</option>
+          <option value="Quantitative">Quantitative</option>
+        </Select>
+      </FormControl>
+
+      <FormControl isRequired>
+        <FormLabel>Unit</FormLabel>
+        <Select
+          placeholder="Select from existing unit list"
+          value={unit}
+          onChange={(e) => setUnit(e.target.value)}
+        >
+          <option value="test">Unavailable for now</option>
+        </Select>
+      </FormControl>
+
+      <FormControl isRequired>
+        <FormLabel>Entity</FormLabel>
+        <Select
+          placeholder="Select from existing entity list"
+          value={entity}
+          onChange={(e) => setEntity(e.target.value)}
+        >
+          <option value="test">Unavailable for now</option>
+        </Select>
+      </FormControl>
+
+      <FormControl isRequired>
+        <FormLabel>Manual ? Owner : Source</FormLabel>
+        <Select
+          placeholder="Select from existing entity list"
+          value={source}
+          onChange={(e) => setSource(e.target.value)}
+        >
+          <option value="test">Unavailable for now</option>
+        </Select>
+      </FormControl>
+
+      <FormControl isRequired>
+        <FormLabel>Schedule</FormLabel>
+        <Input
+          placeholder="Schedule"
+          size="md"
+          type="datetime-local"
+          value={schedule}
+          onChange={(e) => setSchedule(e.target.value)}
+        />
+      </FormControl>
+      <Button onClick={saveData}>Save</Button>
+    </Box>
+  );
+}

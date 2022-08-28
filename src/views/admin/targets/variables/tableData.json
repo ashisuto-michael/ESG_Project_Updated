@@ -1,0 +1,16 @@
+[
+  {
+    "name": "Env Saving",
+    "startDate": "25.Dec.2020",
+    "endDate": "1.Jan.2022",
+    "metric": "GHG Emissions",
+    "targetValue": "10"
+  },
+  {
+    "name": "Happy Workers",
+    "startDate": "3.Mar.2021",
+    "endDate": "2.Dec.2022",
+    "metric": "Happiness Meter",
+    "targetValue": "good"
+  }
+]
