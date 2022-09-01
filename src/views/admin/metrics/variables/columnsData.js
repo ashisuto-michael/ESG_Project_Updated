@@ -17,7 +17,7 @@ export const columnsData = [
   },
   {
     Header: "UNIT",
-    accessor: "unit",
+    accessor: "unitLabel",
   },
   {
     Header: "ENTITY",

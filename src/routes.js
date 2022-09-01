@@ -51,6 +51,7 @@ const routes = [
     icon: <Icon as={MdBarChart} width="20px" height="20px" color="inherit" />,
     path: "/material-topic/:id",
     component: MaterialTopic,
+    hide: true
   },
   {
     name: "New Material Topic",
@@ -58,6 +59,7 @@ const routes = [
     icon: <Icon as={MdBarChart} width="20px" height="20px" color="inherit" />,
     path: "/material-topic",
     component: MaterialTopic,
+    hide: true
   },
   {
     name: "Units",
@@ -72,6 +74,7 @@ const routes = [
     icon: <Icon as={MdBarChart} width="20px" height="20px" color="inherit" />,
     path: "/unit/:id",
     component: Unit,
+    hide: true
   },
   {
     name: "New Unit",
@@ -79,6 +82,7 @@ const routes = [
     icon: <Icon as={MdBarChart} width="20px" height="20px" color="inherit" />,
     path: "/unit",
     component: Unit,
+    hide: true
   },
   {
     name: "Entities",
@@ -93,6 +97,7 @@ const routes = [
     icon: <Icon as={MdBarChart} width="20px" height="20px" color="inherit" />,
     path: "/entity/:id",
     component: Entity,
+    hide: true
   },
   {
     name: "New Entities",
@@ -100,6 +105,7 @@ const routes = [
     icon: <Icon as={MdBarChart} width="20px" height="20px" color="inherit" />,
     path: "/entity",
     component: Entity,
+    hide: true
   },
   {
     name: "Metrics ",
@@ -114,6 +120,7 @@ const routes = [
     icon: <Icon as={MdBarChart} width="20px" height="20px" color="inherit" />,
     path: "/metric/:id",
     component: Metric,
+    hide: true
   },
   {
     name: "New Metrics ",
@@ -121,6 +128,7 @@ const routes = [
     icon: <Icon as={MdBarChart} width="20px" height="20px" color="inherit" />,
     path: "/metric",
     component: Metric,
+    hide: true
   },
   {
     name: "Goals",
@@ -135,6 +143,7 @@ const routes = [
     icon: <Icon as={MdBarChart} width="20px" height="20px" color="inherit" />,
     path: "/goal/:id",
     component: Goal,
+    hide: true
   },
   {
     name: "New Goals",
@@ -142,6 +151,7 @@ const routes = [
     icon: <Icon as={MdBarChart} width="20px" height="20px" color="inherit" />,
     path: "/goal",
     component: Goal,
+    hide: true
   },
   {
     name: "Targets",
@@ -156,6 +166,7 @@ const routes = [
     icon: <Icon as={MdBarChart} width="20px" height="20px" color="inherit" />,
     path: "/target/:id",
     component: Target,
+    hide: true
   },
   {
     name: "New Targets",
@@ -163,6 +174,7 @@ const routes = [
     icon: <Icon as={MdBarChart} width="20px" height="20px" color="inherit" />,
     path: "/target",
     component: Target,
+    hide: true
   },
   {
     name: "Sign In",

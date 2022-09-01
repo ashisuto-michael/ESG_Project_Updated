@@ -28,9 +28,13 @@ export default function Metric() {
   const [type, setType] = useState("");
   const [category, setCategory] = useState("");
   const [unit, setUnit] = useState("");
+  const [unitLabel, setUnitLabel] = useState("");
   const [entity, setEntity] = useState("");
   const [source, setSource] = useState("");
   const [schedule, setSchedule] = useState("");
+
+  // state hooks for fields which look up other collections
+  const [units, setUnits] = useState([]);
 
   // for page navigation
   const history = useHistory();
@@ -41,10 +45,25 @@ export default function Metric() {
 
   // load data when this page is loaded (for edit mode only)
   useEffect(() => {
+    getDependantData();
     if (!!id) {
       getData(id);
     }
   }, []);
+
+  // read other collections from Firestore
+  const getDependantData = () => {
+    db.collection("unit").onSnapshot((snapshot) => {
+      setUnits(
+        snapshot.docs.map((doc) => {
+          return {
+            id: doc.id, // preprend doc Id
+            ...doc.data(),
+          };
+        })
+      );
+    });
+  }
 
   // read doc from Firestore
   const getData = (id) => {
@@ -58,11 +77,19 @@ export default function Metric() {
         setType(doc.type);
         setCategory(doc.category);
         setUnit(doc.unit);
+        setUnitLabel(doc.unitLabel);
         setEntity(doc.entity);
         setSource(doc.source);
         setSchedule(doc.schedule);
+      }).catch(ex => {
+        console.log('Exception: ' + ex)
       });
   };
+
+  const saveUnit = (unit) => {
+    setUnit(unit);
+    setUnitLabel(units.find(u => u.id === unit).name);
+  }
 
   // save doc to Firestore
   const saveData = () => {
@@ -75,6 +102,7 @@ export default function Metric() {
           type,
           category,
           unit,
+          unitLabel,
           entity,
           source,
           schedule,
@@ -89,6 +117,7 @@ export default function Metric() {
           type,
           category,
           unit,
+          unitLabel,
           entity,
           source,
           schedule,
@@ -138,9 +167,13 @@ export default function Metric() {
         <Select
           placeholder="Select from existing unit list"
           value={unit}
-          onChange={(e) => setUnit(e.target.value)}
+          onChange={(e) => saveUnit(e.target.value)}
         >
-          <option value="test">Unavailable for now</option>
+          {
+            units.map((unit) => (
+              <option key={unit.id} value={unit.id}>{unit.name}</option>
+            ))
+          }
         </Select>
       </FormControl>
 
