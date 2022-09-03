@@ -26,6 +26,10 @@ export default function Unit() {
   // state hooks to keep track of changes to each doc field
   const [name, setName] = useState("");
   const [materialTopic, setMaterialTopic] = useState("");
+  const [materialLabel, setMaterialLabel] = useState("");
+
+  // state hooks for fields which look up other collections
+  const [materialTopics, setMaterialTopics] = useState([]);
 
   // for page navigation
   const history = useHistory();
@@ -36,10 +40,25 @@ export default function Unit() {
 
   // load data when this page is loaded (for edit mode only)
   useEffect(() => {
+    getDependantData();
     if (!!id) {
       getData(id);
     }
   }, []);
+
+  // read other collections from Firestore
+  const getDependantData = () => {
+    db.collection("material-topic").onSnapshot((snapshot) => {
+      setMaterialTopics(
+        snapshot.docs.map((doc) => {
+          return {
+            id: doc.id, // preprend doc Id
+            ...doc.data(),
+          };
+        })
+      );
+    });
+  };
 
   // read doc from Firestore
   const getData = (id) => {
@@ -51,7 +70,16 @@ export default function Unit() {
         console.log(doc);
         setName(doc.name);
         setMaterialTopic(doc.materialTopic);
+        setMaterialLabel(doc.materialLabel);
+      })
+      .catch((ex) => {
+        console.log("Exception: " + ex);
       });
+  };
+
+  const saveMaterial = (materialTopic) => {
+    setMaterialTopic(materialTopic);
+    setMaterialLabel(materialTopics.find((m) => m.id === materialTopic).name);
   };
 
   // save doc to Firestore
@@ -63,6 +91,7 @@ export default function Unit() {
         .set({
           name,
           materialTopic,
+          materialLabel,
         })
         .then(history.push("/admin/goals"));
     } else {
@@ -72,6 +101,7 @@ export default function Unit() {
         .set({
           name,
           materialTopic,
+          materialLabel,
         })
         .then(history.push("/admin/goals"));
     }
@@ -94,9 +124,13 @@ export default function Unit() {
         <Select
           placeholder="Select from existing list"
           value={materialTopic}
-          onChange={(e) => setMaterialTopic(e.target.value)}
+          onChange={(e) => saveMaterial(e.target.value)}
         >
-          <option value="test">Unavailable for now</option>
+          {materialTopics.map((materialTopic) => (
+            <option key={materialTopic.id} value={materialTopic.id}>
+              {materialTopic.name}
+            </option>
+          ))}
         </Select>
       </FormControl>
 

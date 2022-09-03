@@ -9,6 +9,6 @@ export const columnsData = [
   },
   {
     Header: "MATERIAL TOPIC",
-    accessor: "materialTopic",
+    accessor: "materialLabel",
   },
 ];

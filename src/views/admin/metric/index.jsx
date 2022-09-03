@@ -30,11 +30,13 @@ export default function Metric() {
   const [unit, setUnit] = useState("");
   const [unitLabel, setUnitLabel] = useState("");
   const [entity, setEntity] = useState("");
+  const [entityLabel, setEntityLabel] = useState("");
   const [source, setSource] = useState("");
   const [schedule, setSchedule] = useState("");
 
   // state hooks for fields which look up other collections
   const [units, setUnits] = useState([]);
+  const [entities, setEntities] = useState([]);
 
   // for page navigation
   const history = useHistory();
@@ -43,16 +45,24 @@ export default function Metric() {
   const { id } = useParams();
   console.log(id);
 
-  // load data when this page is loaded (for edit mode only)
+  // load data when this page is loaded (for edit mode only) (unit and entity)
   useEffect(() => {
-    getDependantData();
+    getUnitData();
+
     if (!!id) {
       getData(id);
     }
   }, []);
 
-  // read other collections from Firestore
-  const getDependantData = () => {
+  useEffect(() => {
+    getEntityData();
+    if (!!id) {
+      getData(id);
+    }
+  }, []);
+
+  // read other collections from Firestore (unit collection)
+  const getUnitData = () => {
     db.collection("unit").onSnapshot((snapshot) => {
       setUnits(
         snapshot.docs.map((doc) => {
@@ -63,7 +73,21 @@ export default function Metric() {
         })
       );
     });
-  }
+  };
+
+  // read other collections from Firestore (entity collection)
+  const getEntityData = () => {
+    db.collection("entity").onSnapshot((snapshot) => {
+      setEntities(
+        snapshot.docs.map((doc) => {
+          return {
+            id: doc.id, // preprend doc Id
+            ...doc.data(),
+          };
+        })
+      );
+    });
+  };
 
   // read doc from Firestore
   const getData = (id) => {
@@ -79,17 +103,24 @@ export default function Metric() {
         setUnit(doc.unit);
         setUnitLabel(doc.unitLabel);
         setEntity(doc.entity);
+        setEntityLabel(doc.entityLabel);
         setSource(doc.source);
         setSchedule(doc.schedule);
-      }).catch(ex => {
-        console.log('Exception: ' + ex)
+      })
+      .catch((ex) => {
+        console.log("Exception: " + ex);
       });
   };
 
   const saveUnit = (unit) => {
     setUnit(unit);
-    setUnitLabel(units.find(u => u.id === unit).name);
-  }
+    setUnitLabel(units.find((u) => u.id === unit).name);
+  };
+
+  const saveEntity = (entity) => {
+    setEntity(entity);
+    setEntityLabel(entities.find((u) => u.id === entity).name);
+  };
 
   // save doc to Firestore
   const saveData = () => {
@@ -104,6 +135,7 @@ export default function Metric() {
           unit,
           unitLabel,
           entity,
+          entityLabel,
           source,
           schedule,
         })
@@ -119,6 +151,7 @@ export default function Metric() {
           unit,
           unitLabel,
           entity,
+          entityLabel,
           source,
           schedule,
         })
@@ -165,31 +198,35 @@ export default function Metric() {
       <FormControl isRequired>
         <FormLabel>Unit</FormLabel>
         <Select
-          placeholder="Select from existing unit list"
+          placeholder="Select"
           value={unit}
           onChange={(e) => saveUnit(e.target.value)}
         >
-          {
-            units.map((unit) => (
-              <option key={unit.id} value={unit.id}>{unit.name}</option>
-            ))
-          }
+          {units.map((unit) => (
+            <option key={unit.id} value={unit.id}>
+              {unit.name}
+            </option>
+          ))}
         </Select>
       </FormControl>
 
       <FormControl isRequired>
         <FormLabel>Entity</FormLabel>
         <Select
-          placeholder="Select from existing entity list"
+          placeholder="Select"
           value={entity}
-          onChange={(e) => setEntity(e.target.value)}
+          onChange={(e) => saveEntity(e.target.value)}
         >
-          <option value="test">Unavailable for now</option>
+          {entities.map((entity) => (
+            <option key={entity.id} value={entity.id}>
+              {entity.name}
+            </option>
+          ))}
         </Select>
       </FormControl>
 
       <FormControl isRequired>
-        <FormLabel>Manual ? Owner : Source</FormLabel>
+        <FormLabel>Owner/Source</FormLabel>
         <Select
           placeholder="Select from existing entity list"
           value={source}

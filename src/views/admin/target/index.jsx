@@ -28,7 +28,11 @@ export default function Target() {
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
   const [metric, setMetric] = useState("");
+  const [metricLabel, setMetricLabel] = useState("");
   const [targetValue, setTarget] = useState("");
+
+  // state hooks for fields which look up other collections
+  const [metrics, setMetrics] = useState([]);
 
   // for page navigation
   const history = useHistory();
@@ -39,10 +43,25 @@ export default function Target() {
 
   // load data when this page is loaded (for edit mode only)
   useEffect(() => {
+    getDependantData();
     if (!!id) {
       getData(id);
     }
   }, []);
+
+  // read other collections from Firestore
+  const getDependantData = () => {
+    db.collection("metric").onSnapshot((snapshot) => {
+      setMetrics(
+        snapshot.docs.map((doc) => {
+          return {
+            id: doc.id, // preprend doc Id
+            ...doc.data(),
+          };
+        })
+      );
+    });
+  };
 
   // read doc from Firestore
   const getData = (id) => {
@@ -56,8 +75,17 @@ export default function Target() {
         setStartDate(doc.startDate);
         setEndDate(doc.endDate);
         setMetric(doc.metric);
+        setMetric(doc.metricLabel);
         setTarget(doc.targetValue);
+      })
+      .catch((ex) => {
+        console.log("Exception: " + ex);
       });
+  };
+
+  const saveMetric = (metric) => {
+    setMetric(metric);
+    setMetricLabel(metrics.find((m) => m.id === metric).name);
   };
 
   // save doc to Firestore
@@ -71,6 +99,7 @@ export default function Target() {
           startDate,
           endDate,
           metric,
+          metricLabel,
           targetValue,
         })
         .then(history.push("/admin/targets"));
@@ -83,6 +112,7 @@ export default function Target() {
           startDate,
           endDate,
           metric,
+          metricLabel,
           targetValue,
         })
         .then(history.push("/admin/targets"));
@@ -128,9 +158,13 @@ export default function Target() {
         <Select
           placeholder="Select from existing list"
           value={metric}
-          onChange={(e) => setMetric(e.target.value)}
+          onChange={(e) => saveMetric(e.target.value)}
         >
-          <option value="test">Unavailable for now</option>
+          {metrics.map((metric) => (
+            <option key={metric.id} value={metric.id}>
+              {metric.name}
+            </option>
+          ))}
         </Select>
       </FormControl>
 

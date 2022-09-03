@@ -17,7 +17,7 @@ export const columnsData = [
   },
   {
     Header: "METRIC",
-    accessor: "metric",
+    accessor: "metricLabel",
   },
   {
     Header: "TARGET VALUE",

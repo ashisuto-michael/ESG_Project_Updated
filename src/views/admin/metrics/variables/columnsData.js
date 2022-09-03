@@ -21,7 +21,7 @@ export const columnsData = [
   },
   {
     Header: "ENTITY",
-    accessor: "entity",
+    accessor: "entityLabel",
   },
   {
     Header: "OWNER/SOURCE",
