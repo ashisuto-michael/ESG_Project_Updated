@@ -1,13 +1,12 @@
 import React from "react";
 
 import { Icon } from "@chakra-ui/react";
-import {
-  MdBarChart,
-  MdPerson,
-  MdHome,
-  MdLock,
-  MdOutlineShoppingCart,
-} from "react-icons/md";
+import { MdBarChart, MdTopic, MdHome, MdAcUnit, MdLock } from "react-icons/md";
+
+import { RiRulerFill } from "react-icons/ri";
+import { GiStairsGoal } from "react-icons/gi";
+import { FiTarget } from "react-icons/fi";
+import { BsLayersFill } from "react-icons/bs";
 
 // Admin Imports
 import MainDashboard from "views/admin/default";
@@ -41,7 +40,7 @@ const routes = [
   {
     name: "Material Topics",
     layout: "/admin",
-    icon: <Icon as={MdBarChart} width="20px" height="20px" color="inherit" />,
+    icon: <Icon as={MdTopic} width="20px" height="20px" color="inherit" />,
     path: "/material-topics",
     component: MaterialTopics,
   },
@@ -51,7 +50,7 @@ const routes = [
     icon: <Icon as={MdBarChart} width="20px" height="20px" color="inherit" />,
     path: "/material-topic/:id",
     component: MaterialTopic,
-    hide: true
+    hide: true,
   },
   {
     name: "New Material Topic",
@@ -59,12 +58,12 @@ const routes = [
     icon: <Icon as={MdBarChart} width="20px" height="20px" color="inherit" />,
     path: "/material-topic",
     component: MaterialTopic,
-    hide: true
+    hide: true,
   },
   {
     name: "Units",
     layout: "/admin",
-    icon: <Icon as={MdBarChart} width="20px" height="20px" color="inherit" />,
+    icon: <Icon as={MdAcUnit} width="20px" height="20px" color="inherit" />,
     path: "/units",
     component: Units,
   },
@@ -74,7 +73,7 @@ const routes = [
     icon: <Icon as={MdBarChart} width="20px" height="20px" color="inherit" />,
     path: "/unit/:id",
     component: Unit,
-    hide: true
+    hide: true,
   },
   {
     name: "New Unit",
@@ -82,12 +81,12 @@ const routes = [
     icon: <Icon as={MdBarChart} width="20px" height="20px" color="inherit" />,
     path: "/unit",
     component: Unit,
-    hide: true
+    hide: true,
   },
   {
     name: "Entities",
     layout: "/admin",
-    icon: <Icon as={MdBarChart} width="20px" height="20px" color="inherit" />,
+    icon: <Icon as={BsLayersFill} width="20px" height="20px" color="inherit" />,
     path: "/entities",
     component: Entities,
   },
@@ -97,7 +96,7 @@ const routes = [
     icon: <Icon as={MdBarChart} width="20px" height="20px" color="inherit" />,
     path: "/entity/:id",
     component: Entity,
-    hide: true
+    hide: true,
   },
   {
     name: "New Entities",
@@ -105,12 +104,12 @@ const routes = [
     icon: <Icon as={MdBarChart} width="20px" height="20px" color="inherit" />,
     path: "/entity",
     component: Entity,
-    hide: true
+    hide: true,
   },
   {
     name: "Metrics ",
     layout: "/admin",
-    icon: <Icon as={MdBarChart} width="20px" height="20px" color="inherit" />,
+    icon: <Icon as={RiRulerFill} width="20px" height="20px" color="inherit" />,
     path: "/metrics",
     component: Metrics,
   },
@@ -120,7 +119,7 @@ const routes = [
     icon: <Icon as={MdBarChart} width="20px" height="20px" color="inherit" />,
     path: "/metric/:id",
     component: Metric,
-    hide: true
+    hide: true,
   },
   {
     name: "New Metrics ",
@@ -128,12 +127,12 @@ const routes = [
     icon: <Icon as={MdBarChart} width="20px" height="20px" color="inherit" />,
     path: "/metric",
     component: Metric,
-    hide: true
+    hide: true,
   },
   {
     name: "Goals",
     layout: "/admin",
-    icon: <Icon as={MdBarChart} width="20px" height="20px" color="inherit" />,
+    icon: <Icon as={GiStairsGoal} width="20px" height="20px" color="inherit" />,
     path: "/goals",
     component: Goals,
   },
@@ -143,7 +142,7 @@ const routes = [
     icon: <Icon as={MdBarChart} width="20px" height="20px" color="inherit" />,
     path: "/goal/:id",
     component: Goal,
-    hide: true
+    hide: true,
   },
   {
     name: "New Goals",
@@ -151,12 +150,12 @@ const routes = [
     icon: <Icon as={MdBarChart} width="20px" height="20px" color="inherit" />,
     path: "/goal",
     component: Goal,
-    hide: true
+    hide: true,
   },
   {
     name: "Targets",
     layout: "/admin",
-    icon: <Icon as={MdBarChart} width="20px" height="20px" color="inherit" />,
+    icon: <Icon as={FiTarget} width="20px" height="20px" color="inherit" />,
     path: "/targets",
     component: Targets,
   },
@@ -166,7 +165,7 @@ const routes = [
     icon: <Icon as={MdBarChart} width="20px" height="20px" color="inherit" />,
     path: "/target/:id",
     component: Target,
-    hide: true
+    hide: true,
   },
   {
     name: "New Targets",
@@ -174,7 +173,7 @@ const routes = [
     icon: <Icon as={MdBarChart} width="20px" height="20px" color="inherit" />,
     path: "/target",
     component: Target,
-    hide: true
+    hide: true,
   },
   {
     name: "Sign In",
